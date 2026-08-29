@@ -1,0 +1,38 @@
+# 抄呢啲 entry 入你 litellm_config.yaml 嘅 model_list: 下面。
+#
+# 重點：model 一定要有 `openai/` 前綴，LiteLLM 先會當佢係 OpenAI 相容端點。
+# 冇前綴會報 model 唔存在。
+
+model_list:
+  - model_name: gemini-pro
+    litellm_params:
+      model: openai/gemini-3.1-pro-low
+      api_base: http://YOUR_SERVER:8081/v1
+      api_key: YOUR_CLIPROXY_API_KEY
+
+  - model_name: gemini-flash
+    litellm_params:
+      model: openai/gemini-3.7-flash-high
+      api_base: http://YOUR_SERVER:8081/v1
+      api_key: YOUR_CLIPROXY_API_KEY
+
+  - model_name: gemini-flash-lite
+    litellm_params:
+      model: openai/gemini-3.1-flash-lite
+      api_base: http://YOUR_SERVER:8081/v1
+      api_key: YOUR_CLIPROXY_API_KEY
+
+  # Antigravity 順帶提供嘅非 Gemini 模型
+  - model_name: ag-claude-sonnet
+    litellm_params:
+      model: openai/claude-sonnet-4-6
+      api_base: http://YOUR_SERVER:8081/v1
+      api_key: YOUR_CLIPROXY_API_KEY
+
+  # 同一個 model_name 寫多次 = LiteLLM 自動 round-robin / failover。
+  # 例如兩個 Google 帳號各自登入，就會分擔額度：
+  # - model_name: gemini-pro
+  #   litellm_params:
+  #     model: openai/gemini-3.1-pro-low
+  #     api_base: http://SECOND_SERVER:8081/v1
+  #     api_key: YOUR_CLIPROXY_API_KEY

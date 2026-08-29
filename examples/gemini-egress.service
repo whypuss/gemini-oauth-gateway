@@ -1,0 +1,14 @@
+[Unit]
+Description=Gemini egress (sing-box socks5 -> compliant-region nodes)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 改成你部機 sing-box 嘅實際路徑（which sing-box）
+ExecStart=/usr/local/bin/sing-box run -c /etc/gemini-egress/config.json
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

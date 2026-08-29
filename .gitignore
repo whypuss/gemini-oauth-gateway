@@ -1,0 +1,15 @@
+# 憑證同本機狀態 —— 永遠唔好 commit
+*.key
+*.pem
+.env
+.env.*
+config.yaml
+!examples/config.yaml.example
+gemini-egress.json
+nodes.txt
+sub.txt
+*.log
+
+.DS_Store
+__pycache__/
+*.pyc

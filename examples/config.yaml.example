@@ -1,0 +1,39 @@
+# CLIProxyAPI 設定範例（放喺 ~/CLIProxyAPI/config.yaml）
+# 完整選項見 CLIProxyAPI 自帶嘅 config.example.yaml
+
+host: ''            # 空 = 綁 0.0.0.0。只想本機用就寫 '127.0.0.1'
+port: 8081
+
+# 下游 client 要帶嘅 Bearer token。用長隨機字串，唔好用示範值。
+#   openssl rand -hex 24
+api-keys:
+  - CHANGE_ME_TO_A_LONG_RANDOM_STRING
+
+# OAuth token 存放位置。-antigravity-login 會寫入呢度，服務會自動熱載入。
+auth-dir: ~/.cli-proxy-api
+
+# ⚠️ 全局代理 —— 填咗之後下面每一個 provider 都會行呢條線。
+#   Gemini/Antigravity 有地區封鎖，出口唔喺支援地區就一定要填。
+#   ALL_PROXY 環境變數係冇用嘅（Go 只讀 HTTP_PROXY / HTTPS_PROXY）。
+#   想只有部分 provider 走代理，就留空呢度，改為喺個別 entry 寫 per-entry proxy-url。
+proxy-url: ""
+# proxy-url: "socks5://127.0.0.1:1081"
+
+tls:
+  enable: false
+
+# 開咗之後失敗請求會寫詳細 log 落 <auth-dir>/logs/
+debug: true
+
+request-retry: 3
+
+# ── 以下係可選：接埋其他 OpenAI 相容上游，同 Antigravity 一齊經呢個端點出街 ──
+# openai-compatibility:
+#   - name: openrouter
+#     base-url: https://openrouter.ai/api/v1
+#     api-key-entries:
+#       - api-key: "sk-or-v1-..."
+#         # proxy-url: "direct"     # 明確唔行全局代理
+#     models:
+#       - name: anthropic/claude-sonnet-4
+#         alias: or-claude-sonnet
